@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package metrics;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/Billy-Davies-2/tui-chat/pkg/proto;proto";
+
+// MetricsService exposes system metrics over gRPC.
+service MetricsService {
+  // GetMetrics returns current CPU, memory, and (if available) GPU metrics.
+  rpc GetMetrics(google.protobuf.Empty) returns (MetricsResponse);
+}
+
+// MetricsResponse carries CPU and RAM usage, plus optional GPU info.
+message MetricsResponse {
+  string host_id = 1;
+  // CPU usage as a percentage (0.0–100.0)
+  double cpu_usage_percent = 2;
+
+  // Memory used, in megabytes
+  double memory_used_mb = 3;
+  // Total memory, in megabytes
+  double memory_total_mb = 4;
+
+  // Optional GPU information; may be empty if no GPU is present or NVML fails to initialize.
+  GPUInfo gpu = 5;
+}
+
+// GPUInfo holds a single GPU’s name and temperature.
+message GPUInfo {
+  // Human-readable GPU model name
+  string name = 1;
+  // Temperature in degrees Celsius
+  double temperature_celsius = 2;
+}
+
