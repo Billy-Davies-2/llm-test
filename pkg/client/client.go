@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"log/slog"
 	"time"
 
 	"google.golang.org/grpc"
@@ -24,13 +25,15 @@ type Metrics struct {
 
 // Client wraps the gRPC stub.
 type Client struct {
-	stub proto.MetricsServiceClient
-	conn *grpc.ClientConn
+	logger *slog.Logger
+	stub   proto.MetricsServiceClient
+	conn   *grpc.ClientConn
 }
 
 // NewClient dials the server at addr (e.g. "host:50051").
 // It will retry for up to 5 seconds if the connection isn’t ready.
-func NewClient(ctx context.Context, addr string) (*Client, error) {
+func NewClient(ctx context.Context, addr string, logger *slog.Logger) (*Client, error) {
+	logger.Debug("dialing metrics server", "addr", addr)
 	cp := grpc.ConnectParams{
 		Backoff: backoff.Config{
 			BaseDelay:  100 * time.Millisecond,
@@ -48,6 +51,7 @@ func NewClient(ctx context.Context, addr string) (*Client, error) {
 		grpc.WithConnectParams(cp),
 	)
 	if err != nil {
+		logger.Error("failed to create grpc client", "err", err)
 		return nil, err
 	}
 
@@ -55,8 +59,9 @@ func NewClient(ctx context.Context, addr string) (*Client, error) {
 	cc.Connect()
 
 	return &Client{
-		stub: proto.NewMetricsServiceClient(cc),
-		conn: cc,
+		stub:   proto.NewMetricsServiceClient(cc),
+		conn:   cc,
+		logger: logger,
 	}, nil
 }
 
@@ -64,6 +69,7 @@ func NewClient(ctx context.Context, addr string) (*Client, error) {
 func (c *Client) FetchMetrics(ctx context.Context) (*Metrics, error) {
 	resp, err := c.stub.GetMetrics(ctx, &emptypb.Empty{})
 	if err != nil {
+		c.logger.Warn("FetchMetrics RPC failed", "err", err)
 		return nil, err
 	}
 	m := &Metrics{
@@ -72,6 +78,12 @@ func (c *Client) FetchMetrics(ctx context.Context) (*Metrics, error) {
 		MemoryUsedMB:  resp.GetMemoryUsedMb(),
 		MemoryTotalMB: resp.GetMemoryTotalMb(),
 	}
+	c.logger.Debug("fetched metrics",
+		"host", m.HostID,
+		"cpu", m.CPUUsagePct,
+		"ram_used", m.MemoryUsedMB,
+		"ram_total", m.MemoryTotalMB,
+	)
 	if g := resp.GetGpu(); g != nil {
 		m.GPUName = g.GetName()
 		m.GPUTempCelsius = g.GetTemperatureCelsius()

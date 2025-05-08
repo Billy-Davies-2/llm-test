@@ -21,6 +21,8 @@ type Server struct {
 	hostID string
 	port   int
 	grpc   *grpc.Server
+	proto.UnimplementedChatServiceServer
+	proto.UnimplementedMetricsServiceServer
 }
 
 // NewServer constructs a metrics server for a given hostID and port
@@ -79,5 +81,21 @@ func (m *metricsService) GetMetrics(
 		CpuUsagePercent: cpuPct,
 		MemoryUsedMb:    float64(vm.Used) / 1024 / 1024,
 		MemoryTotalMb:   float64(vm.Total) / 1024 / 1024,
+	}, nil
+}
+
+// Chat implements metrics.ChatServiceServer.Chat
+func (s *Server) Chat(ctx context.Context, req *proto.ChatRequest) (*proto.ChatResponse, error) {
+	// Log which server handled it and what was asked
+	s.logger.Info("Chat request",
+		"host", s.hostID,
+		"prompt", req.GetText(),
+	)
+
+	// For now: echo a canned AI reply
+	reply := "🤖 This is a canned AI response."
+	return &proto.ChatResponse{
+		HostId: s.hostID,
+		Text:   reply,
 	}, nil
 }

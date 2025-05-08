@@ -174,7 +174,7 @@ const file_metrics_proto_rawDesc = "" +
 	"\x13temperature_celsius\x18\x02 \x01(\x01R\x12temperatureCelsius2P\n" +
 	"\x0eMetricsService\x12>\n" +
 	"\n" +
-	"GetMetrics\x12\x16.google.protobuf.Empty\x1a\x18.metrics.MetricsResponseB4Z2github.com/Billy-Davies-2/tui-chat/pkg/proto;protob\x06proto3"
+	"GetMetrics\x12\x16.google.protobuf.Empty\x1a\x18.metrics.MetricsResponseB4Z2github.com/Billy-Davies-2/llm-test/pkg/proto;protob\x06proto3"
 
 var (
 	file_metrics_proto_rawDescOnce sync.Once

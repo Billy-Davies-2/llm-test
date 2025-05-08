@@ -4,7 +4,7 @@ package metrics;
 
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/Billy-Davies-2/tui-chat/pkg/proto;proto";
+option go_package = "github.com/Billy-Davies-2/llm-test/pkg/proto;proto";
 
 // MetricsService exposes system metrics over gRPC.
 service MetricsService {

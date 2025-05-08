@@ -1,0 +1,16 @@
+syntax = "proto3";
+package proto;
+option go_package = "github.com/Billy-Davies-2/llm-test/pkg/proto;proto";
+
+service ChatService {
+  rpc Chat(ChatRequest) returns (ChatResponse);
+}
+
+message ChatRequest {
+  string text = 1;
+}
+
+message ChatResponse {
+  string host_id = 1;
+  string text    = 2;
+}

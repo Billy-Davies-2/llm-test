@@ -4,6 +4,7 @@ package client_test
 
 import (
 	"context"
+	"log/slog"
 	"net"
 	"testing"
 	"time"
@@ -65,7 +66,7 @@ func TestFetchMetrics_Success(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
-	cli, err := client.NewClient(ctx, addr)
+	cli, err := client.NewClient(ctx, addr, &slog.Logger{})
 	if err != nil {
 		t.Fatalf("NewClient(): unexpected error: %v", err)
 	}
@@ -104,7 +105,7 @@ func TestFetchMetrics_ServerError(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
-	cli, err := client.NewClient(ctx, addr)
+	cli, err := client.NewClient(ctx, addr, &slog.Logger{})
 	if err != nil {
 		t.Fatalf("NewClient(): unexpected error: %v", err)
 	}
