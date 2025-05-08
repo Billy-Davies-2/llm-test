@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"github.com/Billy-Davies-2/tui-chat/pkg/proto"
+	"github.com/Billy-Davies-2/llm-test/pkg/proto"
 )
 
 // Metrics holds the domain-friendly view of MetricsResponse.
@@ -77,4 +77,8 @@ func (c *Client) FetchMetrics(ctx context.Context) (*Metrics, error) {
 		m.GPUTempCelsius = g.GetTemperatureCelsius()
 	}
 	return m, nil
+}
+
+func (c *Client) Close() error {
+	return c.conn.Close()
 }

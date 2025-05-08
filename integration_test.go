@@ -8,9 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Billy-Davies-2/tui-chat/pkg/client"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	"github.com/Billy-Davies-2/llm-test/pkg/client"
 )
 
 func TestServerClientEndToEnd(t *testing.T) {

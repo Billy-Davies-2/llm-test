@@ -1,4 +1,4 @@
-module github.com/Billy-Davies-2/tui-chat
+module github.com/Billy-Davies-2/llm-test
 
 go 1.24.0
 

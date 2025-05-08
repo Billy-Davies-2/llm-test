@@ -2,11 +2,12 @@ package main
 
 import (
 	"flag"
-	"github.com/Billy-Davies-2/tui-chat/pkg/tui"
-	tea "github.com/charmbracelet/bubbletea"
 	"log/slog"
 	"os"
 	"strings"
+
+	"github.com/Billy-Davies-2/llm-test/pkg/tui"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 func main() {

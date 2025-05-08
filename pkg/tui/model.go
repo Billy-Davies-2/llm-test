@@ -3,6 +3,7 @@ package tui
 import (
 	"time"
 
+	metrics "github.com/Billy-Davies-2/llm-test/pkg/proto"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -74,7 +75,7 @@ func InitialModel() model {
 		width:       80,
 		height:      24,
 		page:        pageChat,
-		servers:     servers,
+		servers:     []ServerMetrics{},
 	}
 }
 
@@ -96,6 +97,10 @@ func (m model) Init() tea.Cmd {
 		blinkCmd(),
 		sysTickCmd(),
 	)
+}
+
+func (m model) NewModel(peers []string) {
+
 }
 
 // ── Tea.Update ──────────────────────────────────────────────────────

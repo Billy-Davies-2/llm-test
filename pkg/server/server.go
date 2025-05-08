@@ -7,11 +7,12 @@ import (
 	"log/slog"
 	"net"
 
-	"github.com/Billy-Davies-2/tui-chat/pkg/proto"
+	"github.com/Billy-Davies-2/llm-test/pkg/proto"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 // Server wraps the gRPC server for metrics reporting
@@ -39,7 +40,7 @@ func (s *Server) Run() error {
 	if err != nil {
 		return fmt.Errorf("listen %s: %w", addr, err)
 	}
-	if err := grpc.Serve(lis); err != nil {
+	if err := s.grpc.Serve(lis); err != nil {
 		s.logger.Error("grpc serve failed", "err", err)
 		return err
 	}
@@ -55,7 +56,7 @@ type metricsService struct {
 
 func (m *metricsService) GetMetrics(
 	ctx context.Context,
-	_ *proto.Empty,
+	_ *emptypb.Empty,
 ) (*proto.MetricsResponse, error) {
 	// CPU usage
 	perc, err := cpu.Percent(0, false)

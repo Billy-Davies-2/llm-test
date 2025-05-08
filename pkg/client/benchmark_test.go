@@ -6,8 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Billy-Davies-2/tui-chat/pkg/client"
-	"github.com/Billy-Davies-2/tui-chat/pkg/proto"
+	"github.com/Billy-Davies-2/llm-test/pkg/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/backoff"
 	"google.golang.org/grpc/credentials/insecure"

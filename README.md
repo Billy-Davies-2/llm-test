@@ -1,8 +1,10 @@
-# TUI Chat Terminal
+# LLM Test
 
 A retro-style terminal chat application written in Go, powered by [Bubble Tea](https://github.com/charmbracelet/bubbletea) and [Lip Gloss](https://github.com/charmbracelet/lipgloss).
 
 Inspired heavily by [cool-retro-term](https://github.com/Swordfish90/cool-retro-term)
+
+Also heavily inspired by [exo](https://github.com/exo-explore/exo)
 
 ## Features
 
@@ -82,6 +84,8 @@ Run the built binary:
 - [ ] mouse support in chat terminal 
 - [ ] more complex vim bindings.
 - [ ] parallax or some sort of cool backgrounds.
+- [ ] gossip protocol for servers
+- [ ] protobuf compression instead of just raw protobufs
 
 
 ## Contributing
@@ -90,5 +94,5 @@ Contributions, issues and feature requests are welcome! Feel free to fork the pr
 
 ## License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the **GPL**. See the [LICENSE](LICENSE) file for details.
 

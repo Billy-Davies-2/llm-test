@@ -4,6 +4,12 @@ import (
 	"testing"
 )
 
+type MetricsData struct {
+	HostID string
+	CPU    float64
+	RAM    float64
+}
+
 // minimal model stub so we can call metricsView
 type fakeModel struct {
 	metricsMap    map[string]MetricsData

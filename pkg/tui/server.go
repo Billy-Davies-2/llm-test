@@ -7,11 +7,12 @@ import (
 	"log"
 	"net"
 
-	"github.com/Billy-Davies-2/tui-chat/pkg/proto"
+	"github.com/Billy-Davies-2/llm-test/pkg/proto"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 // metricsServer implements the MetricsServiceServer interface
@@ -20,8 +21,7 @@ type metricsServer struct {
 	hostID string
 }
 
-// GetMetrics returns current CPU, memory and optional GPU metrics
-func (s *metricsServer) GetMetrics(ctx context.Context, _ *proto.Empty) (*proto.MetricsResponse, error) {
+func (s *metricsServer) GetMetrics(ctx context.Context, _ *emptypb.Empty) (*proto.MetricsResponse, error) {
 	// CPU usage percent
 	cpuPercents, err := cpu.Percent(0, false)
 	if err != nil {

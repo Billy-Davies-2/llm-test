@@ -8,8 +8,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/joho/godotenv"
 
-	"github.com/Billy-Davies-2/tui-chat/pkg/clipboard"
-	"github.com/Billy-Davies-2/tui-chat/pkg/tui"
+	"github.com/Billy-Davies-2/llm-test/pkg/clipboard"
+	"github.com/Billy-Davies-2/llm-test/pkg/tui"
 )
 
 func main() {
@@ -30,11 +30,11 @@ func main() {
 	clipboard.Init()
 
 	// 4) run the TUI
-	if err := tea.NewProgram(
+	if _, err := tea.NewProgram(
 		tui.InitialModel(),
 		tea.WithAltScreen(),
 		tea.WithMouseAllMotion(),
-	).Start(); err != nil {
+	).Run(); err != nil {
 		fmt.Println("TUI exited with error:", err)
 		os.Exit(1)
 	}

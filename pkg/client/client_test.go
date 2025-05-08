@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Billy-Davies-2/tui-chat/pkg/client"
-	"github.com/Billy-Davies-2/tui-chat/pkg/proto"
+	"github.com/Billy-Davies-2/llm-test/pkg/client"
+	"github.com/Billy-Davies-2/llm-test/pkg/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
