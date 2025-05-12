@@ -11,22 +11,23 @@ import (
 )
 
 func main() {
-	f, err := os.OpenFile("tui.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+	logFile, err := os.OpenFile("tui.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		// If we can’t open the file, fall back to stderr
-		f = os.Stderr
+		panic("Failed to open log file: " + err.Error()) // Replace with proper error handling if needed
 	}
-	defer f.Close()
-	logger := func() *slog.Logger {
-		h := slog.NewTextHandler(f, &slog.HandlerOptions{
-			Level:     slog.LevelError,
-			AddSource: false,
-		})
-		return slog.New(h)
-	}()
+	defer logFile.Close()
+
+	// Create a new slog handler that writes to the log file
+	handler := slog.NewTextHandler(logFile, nil)
+	logger := slog.New(handler)
+
+	slog.SetDefault(logger)
+
+	slog.Info("TUI started")
 
 	// seed our in-memory clipboard from the OS
 	clipboard.Init()
+	slog.Info("Copied clipboard into in-memory clipboard")
 
 	// run the TUI
 	if _, err := tea.NewProgram(tui.InitialModel(), tea.WithAltScreen(), tea.WithMouseAllMotion()).Run(); err != nil {

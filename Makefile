@@ -1,18 +1,18 @@
 .PHONY: fmt lint gen-protos test build
 
 fmt:
-\tgo fmt ./...
+	go fmt ./...
 
 lint:
-\tgolangci-lint run
+	golangci-lint run
 
 gen-protos:
-\t./scripts/gen-protos.sh
+	./scripts/gen-protos.sh
 
 test:
-\tgo test ./pkg/... ./cmd/...
-\tgo test ./integration_tests
+	go test ./pkg/... ./cmd/...
+	go test ./integration_tests
 
 build: gen-protos
-\tgo build -o bin/llm-backend ./cmd/metrics-server
-\tgo build -o bin/llm-tui     ./cmd/tui-client
+	go build -o bin/llm-backend ./cmd/metrics-server
+	go build -o bin/llm-tui     ./cmd/tui-client
