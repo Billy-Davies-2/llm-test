@@ -3,7 +3,7 @@ package tui
 import (
 	"time"
 
-	metrics "github.com/Billy-Davies-2/llm-test/pkg/proto"
+	metrics "github.com/Billy-Davies-2/llm-test/pkg/proto/metrics"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -99,8 +99,13 @@ func (m model) Init() tea.Cmd {
 	)
 }
 
-func (m model) NewModel(peers []string) {
-
+func (m model) NewModel(peers []string) model {
+	// Create a new model with the given peers and logger
+	m.servers = make([]ServerMetrics, len(peers))
+	for i, peer := range peers {
+		m.servers[i] = ServerMetrics{URL: peer}
+	}
+	return m
 }
 
 // ── Tea.Update ──────────────────────────────────────────────────────

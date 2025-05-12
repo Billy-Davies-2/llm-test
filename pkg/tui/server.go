@@ -7,7 +7,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/Billy-Davies-2/llm-test/pkg/proto"
+	proto "github.com/Billy-Davies-2/llm-test/pkg/proto/metrics"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
 	"google.golang.org/grpc"

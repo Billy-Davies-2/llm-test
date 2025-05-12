@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"github.com/Billy-Davies-2/llm-test/pkg/proto"
+	proto "github.com/Billy-Davies-2/llm-test/pkg/proto/metrics"
 )
 
 // Metrics holds the domain-friendly view of MetricsResponse.

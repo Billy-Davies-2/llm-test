@@ -1,4 +1,3 @@
-// pkg/clipboard/clipboard.go
 package clipboard
 
 import (

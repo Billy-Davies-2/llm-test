@@ -1,1 +1,3 @@
 tui.log
+api/_*grpc.pb.go
+api/*.pb.go

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Billy-Davies-2/llm-test/pkg/proto"
+	proto "github.com/Billy-Davies-2/llm-test/pkg/proto/metrics"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/backoff"
 	"google.golang.org/grpc/credentials/insecure"

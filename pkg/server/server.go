@@ -7,7 +7,8 @@ import (
 	"log/slog"
 	"net"
 
-	"github.com/Billy-Davies-2/llm-test/pkg/proto"
+	chatpb "github.com/Billy-Davies-2/llm-test/pkg/proto/chat"
+	metricspb "github.com/Billy-Davies-2/llm-test/pkg/proto/metrics"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
 	"google.golang.org/grpc"
@@ -21,15 +22,15 @@ type Server struct {
 	hostID string
 	port   int
 	grpc   *grpc.Server
-	proto.UnimplementedChatServiceServer
-	proto.UnimplementedMetricsServiceServer
+	chatpb.UnimplementedChatServiceServer
+	metricspb.UnimplementedMetricsServiceServer
 }
 
 // NewServer constructs a metrics server for a given hostID and port
 func NewServer(logger *slog.Logger, hostID string, port int) *Server {
 	s := grpc.NewServer()
 	impl := &metricsService{hostID: hostID}
-	proto.RegisterMetricsServiceServer(s, impl)
+	metricspb.RegisterMetricsServiceServer(s, impl)
 	reflection.Register(s)
 	return &Server{logger: logger, hostID: hostID, port: port, grpc: s}
 }
@@ -52,14 +53,14 @@ func (s *Server) Run() error {
 // metricsService implements the MetricsServiceServer interface
 // backed by gopsutil for CPU and memory stats
 type metricsService struct {
-	proto.UnimplementedMetricsServiceServer
+	metricspb.UnimplementedMetricsServiceServer
 	hostID string
 }
 
 func (m *metricsService) GetMetrics(
 	ctx context.Context,
 	_ *emptypb.Empty,
-) (*proto.MetricsResponse, error) {
+) (*metricspb.MetricsResponse, error) {
 	// CPU usage
 	perc, err := cpu.Percent(0, false)
 	if err != nil {
@@ -76,7 +77,7 @@ func (m *metricsService) GetMetrics(
 		return nil, err
 	}
 
-	return &proto.MetricsResponse{
+	return &metricspb.MetricsResponse{
 		HostId:          m.hostID,
 		CpuUsagePercent: cpuPct,
 		MemoryUsedMb:    float64(vm.Used) / 1024 / 1024,
@@ -85,7 +86,7 @@ func (m *metricsService) GetMetrics(
 }
 
 // Chat implements metrics.ChatServiceServer.Chat
-func (s *Server) Chat(ctx context.Context, req *proto.ChatRequest) (*proto.ChatResponse, error) {
+func (s *Server) Chat(ctx context.Context, req *chatpb.ChatRequest) (*chatpb.ChatResponse, error) {
 	// Log which server handled it and what was asked
 	s.logger.Info("Chat request",
 		"host", s.hostID,
@@ -94,7 +95,7 @@ func (s *Server) Chat(ctx context.Context, req *proto.ChatRequest) (*proto.ChatR
 
 	// For now: echo a canned AI reply
 	reply := "🤖 This is a canned AI response."
-	return &proto.ChatResponse{
+	return &chatpb.ChatResponse{
 		HostId: s.hostID,
 		Text:   reply,
 	}, nil

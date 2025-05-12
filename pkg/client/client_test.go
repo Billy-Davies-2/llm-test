@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/Billy-Davies-2/llm-test/pkg/client"
-	"github.com/Billy-Davies-2/llm-test/pkg/proto"
+	proto "github.com/Billy-Davies-2/llm-test/pkg/proto/metrics"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

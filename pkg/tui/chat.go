@@ -8,7 +8,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/Billy-Davies-2/llm-test/pkg/clipboard"
+	"github.com/Billy-Davies-2/llm-test/pkg/tui/clipboard"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
