@@ -86,7 +86,8 @@ Run the built binary:
 - [ ] parallax or some sort of cool backgrounds.
 - [ ] gossip protocol for servers
 - [ ] protobuf compression instead of just raw protobufs
-
+- [ ] native cuda/metal instead of llama.cpp
+- [ ] really learn cgo
 
 ## Contributing
 
